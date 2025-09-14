@@ -1,0 +1,427 @@
+/* Google Calendar Integration Styles */
+
+.calendar-container {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--parchment-shadow);
+}
+
+/* Calendar Header */
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: var(--parchment-dark);
+    border-bottom: 1px solid var(--parchment-shadow);
+}
+
+.calendar-title {
+    font-family: var(--header-font);
+    font-size: 1.3rem;
+    color: var(--accent-color);
+}
+
+.calendar-nav {
+    display: flex;
+    gap: 10px;
+}
+
+.calendar-nav-btn {
+    background-color: var(--parchment-color);
+    border: 1px solid var(--parchment-shadow);
+    color: var(--text-color);
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--body-font);
+    transition: all 0.3s ease;
+}
+
+.calendar-nav-btn:hover {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+/* Calendar Grid */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background-color: white;
+}
+
+.calendar-day-header {
+    text-align: center;
+    padding: 10px;
+    font-weight: 600;
+    background-color: var(--parchment-color);
+    border-bottom: 1px solid var(--parchment-shadow);
+}
+
+.calendar-day {
+    min-height: 100px;
+    padding: 5px;
+    border-right: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    position: relative;
+}
+
+.calendar-day:nth-child(7n) {
+    border-right: none;
+}
+
+.calendar-day-number {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+}
+
+.calendar-day.today .calendar-day-number {
+    background-color: var(--accent-color);
+    color: white;
+    border-radius: 50%;
+}
+
+.calendar-day.other-month {
+    background-color: #f9f9f9;
+    color: #aaa;
+}
+
+/* Event Styles */
+.calendar-event {
+    margin-top: 25px;
+    margin-bottom: 3px;
+    padding: 3px 6px;
+    font-size: 0.8rem;
+    border-radius: 3px;
+    background-color: rgba(139, 69, 19, 0.1);
+    border-left: 3px solid var(--accent-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.calendar-event:hover {
+    background-color: rgba(139, 69, 19, 0.2);
+}
+
+/* Event Modal */
+.event-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.event-modal-content {
+    background-color: var(--parchment-color);
+    padding: 25px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--parchment-shadow);
+}
+
+.event-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--parchment-shadow);
+}
+
+.event-modal-title {
+    font-family: var(--header-font);
+    color: var(--accent-color);
+    font-size: 1.5rem;
+}
+
+.event-modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+.event-modal-body {
+    margin-bottom: 20px;
+}
+
+.event-detail {
+    margin-bottom: 10px;
+}
+
+.event-detail-label {
+    font-weight: 600;
+    color: var(--accent-color);
+}
+
+.event-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.event-modal-btn {
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--body-font);
+    transition: all 0.3s ease;
+}
+
+.event-modal-btn.primary {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+}
+
+.event-modal-btn.secondary {
+    background-color: transparent;
+    color: var(--text-color);
+    border: 1px solid var(--parchment-shadow);
+}
+
+.event-modal-btn:hover {
+    opacity: 0.9;
+}
+
+/* Calendar List View */
+.calendar-list {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.calendar-list-item {
+    display: flex;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.3s ease;
+}
+
+.calendar-list-item:hover {
+    background-color: rgba(242, 232, 201, 0.3);
+}
+
+.calendar-list-date {
+    width: 100px;
+    text-align: center;
+    padding-right: 20px;
+    border-right: 1px solid #eee;
+}
+
+.calendar-list-day {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--accent-color);
+}
+
+.calendar-list-month {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.calendar-list-content {
+    flex: 1;
+    padding-left: 20px;
+}
+
+.calendar-list-title {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: var(--text-color);
+}
+
+.calendar-list-time {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.calendar-list-description {
+    font-size: 0.9rem;
+    color: #444;
+}
+
+/* Calendar Controls */
+.calendar-controls {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    background-color: var(--parchment-color);
+    border-top: 1px solid var(--parchment-shadow);
+}
+
+.calendar-view-toggle {
+    display: flex;
+    gap: 10px;
+}
+
+.calendar-view-btn {
+    background-color: white;
+    border: 1px solid var(--parchment-shadow);
+    color: var(--text-color);
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--body-font);
+    transition: all 0.3s ease;
+}
+
+.calendar-view-btn.active {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.calendar-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Responsive Calendar */
+@media (max-width: 768px) {
+    .calendar-day-header {
+        font-size: 0.8rem;
+        padding: 5px;
+    }
+    
+    .calendar-day {
+        min-height: 80px;
+    }
+    
+    .calendar-event {
+        font-size: 0.7rem;
+        padding: 2px 4px;
+    }
+    
+    .calendar-list-date {
+        width: 70px;
+    }
+    
+    .calendar-list-day {
+        font-size: 1.5rem;
+    }
+}
+
+/* Loading State */
+.calendar-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.calendar-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(139, 69, 19, 0.1);
+    border-radius: 50%;
+    border-top-color: var(--accent-color);
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Google Calendar Auth Buttons */
+#authorize-button, #signout-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 0;
+    border-radius: 4px;
+    font-family: var(--body-font);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#authorize-button {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+}
+
+#signout-button {
+    background-color: transparent;
+    color: var(--text-color);
+    border: 1px solid var(--parchment-shadow);
+}
+
+#authorize-button:hover, #signout-button:hover {
+    opacity: 0.9;
+}
+
+/* Event List */
+.event-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.event-item {
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 6px;
+    border: 1px solid var(--parchment-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.event-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.event-date {
+    color: var(--accent-color);
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.event-title {
+    font-size: 1.1rem;
+}
+
+.event-description {
+    margin-top: 5px;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.event-location {
+    margin-top: 5px;
+    font-size: 0.9rem;
+    color: #777;
+}
+
+/* No Events Message */
+.no-events {
+    text-align: center;
+    padding: 30px;
+    color: #666;
+    font-style: italic;
+}

@@ -1,0 +1,467 @@
+/* Main Styling for Knights of Pythias Website */
+
+:root {
+  --parchment-color: #f2e8c9;
+  --parchment-dark: #e0d4a9;
+  --parchment-shadow: #d4c89c;
+  --text-color: #5a3e2b;
+  --accent-color: #8b4513;
+  --header-font: 'Cinzel', serif;
+  --body-font: 'Lora', serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--body-font);
+  color: var(--text-color);
+  line-height: 1.6;
+  background-color: #f5f5f5;
+  overflow-x: hidden;
+}
+
+/* Parchment Container */
+.parchment-container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--parchment-color);
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 1400px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Torn Parchment Edges */
+.parchment-container::before,
+.parchment-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 40px;
+  height: 100%;
+  background-image: url('../images/torn-edge.png');
+  background-repeat: repeat-y;
+  z-index: 10;
+}
+
+.parchment-container::before {
+  left: 0;
+  transform: scaleX(-1);
+}
+
+.parchment-container::after {
+  right: 0;
+}
+
+/* Parchment Texture */
+.parchment-texture {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../images/parchment-texture.jpg');
+  background-blend-mode: multiply;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 5;
+}
+
+/* Header Styling */
+header {
+  background-color: rgba(242, 232, 201, 0.9);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  width: 100%;
+  max-width: 1400px;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 2px solid var(--parchment-shadow);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.logo {
+  font-family: var(--header-font);
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+/* Navigation */
+nav ul {
+  display: flex;
+  list-style: none;
+}
+
+nav ul li {
+  margin-left: 30px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 500;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+  color: var(--accent-color);
+}
+
+.auth-buttons a {
+  display: inline-block;
+  padding: 8px 20px;
+  margin-left: 10px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.login-btn {
+  color: var(--accent-color);
+  border: 2px solid var(--accent-color);
+}
+
+.login-btn:hover {
+  background-color: var(--accent-color);
+  color: var(--parchment-color);
+}
+
+/* Hero Section */
+.hero {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-image: url('../images/hero-parchment.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.hero-content {
+  max-width: 800px;
+  padding: 40px;
+  background-color: rgba(242, 232, 201, 0.8);
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--parchment-shadow);
+}
+
+.hero h1 {
+  font-family: var(--header-font);
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  color: var(--accent-color);
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+/* Main Content Sections */
+section {
+  padding: 100px 0;
+  position: relative;
+  z-index: 5;
+}
+
+.section-title {
+  font-family: var(--header-font);
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 50px;
+  color: var(--accent-color);
+}
+
+/* Photo Gallery with Fade-in Effect */
+.photo-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 50px;
+}
+
+.photo-item {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--parchment-shadow);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.photo-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.photo-item img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.photo-item:hover img {
+  transform: scale(1.05);
+}
+
+.photo-caption {
+  padding: 15px;
+  background-color: var(--parchment-color);
+}
+
+.photo-caption h3 {
+  font-family: var(--header-font);
+  margin-bottom: 8px;
+}
+
+/* Calendar Section */
+.calendar-section {
+  background-color: rgba(242, 232, 201, 0.7);
+  padding: 80px 0;
+  border-top: 2px solid var(--parchment-shadow);
+  border-bottom: 2px solid var(--parchment-shadow);
+}
+
+.calendar-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  height: 500px;
+}
+
+/* Footer */
+footer {
+  background-color: var(--parchment-dark);
+  color: var(--text-color);
+  padding: 50px 0 20px;
+  border-top: 2px solid var(--parchment-shadow);
+  position: relative;
+  z-index: 5;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.footer-column h3 {
+  font-family: var(--header-font);
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+}
+
+.footer-column ul {
+  list-style: none;
+}
+
+.footer-column ul li {
+  margin-bottom: 10px;
+}
+
+.footer-column ul li a {
+  text-decoration: none;
+  color: var(--text-color);
+  transition: color 0.3s ease;
+}
+
+.footer-column ul li a:hover {
+  color: var(--accent-color);
+}
+
+.copyright {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid var(--parchment-shadow);
+}
+
+/* Member Area Styling */
+.member-content {
+  background-color: rgba(242, 232, 201, 0.9);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--parchment-shadow);
+  margin-top: 100px;
+}
+
+/* Form Styling */
+.form-container {
+  max-width: 500px;
+  margin: 100px auto;
+  padding: 30px;
+  background-color: var(--parchment-color);
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--parchment-shadow);
+}
+
+.form-title {
+  font-family: var(--header-font);
+  text-align: center;
+  margin-bottom: 30px;
+  color: var(--accent-color);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--parchment-shadow);
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.8);
+  font-family: var(--body-font);
+}
+
+.form-button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-family: var(--body-font);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-button:hover {
+  background-color: #6b3410;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+  }
+  
+  nav ul {
+    margin-top: 20px;
+  }
+  
+  nav ul li {
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+  
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  .parchment-container::before,
+  .parchment-container::after {
+    width: 20px;
+  }
+}
+
+/* Animation for scroll reveal */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.fade-in.visible {
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+/* Knights of Pythias specific styling */
+.knights-logo {
+  max-width: 60px;
+  margin-right: 15px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.knights-title {
+  font-family: var(--header-font);
+  color: var(--accent-color);
+  font-size: 1.8rem;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.knights-subtitle {
+  font-family: var(--body-font);
+  color: var(--text-color);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+/* Error message styling */
+.error-message {
+  color: #d9534f;
+  background-color: #f9f2f2;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  text-align: center;
+  display: none;
+}
+
+/* Admin message */
+.admin-message {
+  background-color: rgba(139, 69, 19, 0.1);
+  border-left: 4px solid var(--accent-color);
+  padding: 15px;
+  margin-bottom: 20px;
+  font-style: italic;
+}

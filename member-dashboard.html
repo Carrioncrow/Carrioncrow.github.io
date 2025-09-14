@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Dashboard - Knights of Pythias</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/calendar.css">
+    <style>
+        /* Additional styles for member dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .sidebar {
+            background-color: var(--parchment-color);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid var(--parchment-shadow);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+        }
+        
+        .sidebar-menu li {
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--parchment-shadow);
+            padding-bottom: 15px;
+        }
+        
+        .sidebar-menu li:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .sidebar-menu a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            display: block;
+            transition: color 0.3s ease;
+        }
+        
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            color: var(--accent-color);
+        }
+        
+        .dashboard-content {
+            background-color: var(--parchment-color);
+            border-radius: 8px;
+            padding: 30px;
+            border: 1px solid var(--parchment-shadow);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dashboard-section {
+            margin-bottom: 40px;
+        }
+        
+        .dashboard-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .dashboard-section h3 {
+            font-family: var(--header-font);
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--parchment-shadow);
+        }
+        
+        .event-list {
+            list-style: none;
+        }
+        
+        .event-item {
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid var(--parchment-shadow);
+        }
+        
+        .event-date {
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-bottom: 5px;
+        }
+        
+        .event-title {
+            font-size: 1.1rem;
+        }
+        
+        .profile-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .profile-field {
+            margin-bottom: 15px;
+        }
+        
+        .profile-field label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--accent-color);
+        }
+        
+        .tab-navigation {
+            display: flex;
+            border-bottom: 1px solid var(--parchment-shadow);
+            margin-bottom: 20px;
+        }
+        
+        .tab-button {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            font-family: var(--body-font);
+            font-size: 1rem;
+            cursor: pointer;
+            color: var(--text-color);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-button.active {
+            color: var(--accent-color);
+            border-bottom: 3px solid var(--accent-color);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .calendar-wrapper {
+            height: 500px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 6px;
+            padding: 20px;
+            border: 1px solid var(--parchment-shadow);
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .lodge-announcement {
+            background-color: rgba(139, 69, 19, 0.1);
+            border-left: 4px solid var(--accent-color);
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .lodge-announcement h4 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+        
+        .document-item {
+            display: flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            border: 1px solid var(--parchment-shadow);
+            transition: background-color 0.3s ease;
+        }
+        
+        .document-item:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .document-icon {
+            margin-right: 15px;
+            color: var(--accent-color);
+            font-size: 1.5rem;
+        }
+        
+        .document-info {
+            flex: 1;
+        }
+        
+        .document-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .document-date {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .document-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .document-btn {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .document-btn.view {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .document-btn.download {
+            background-color: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+        }
+        
+        .document-btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <div class="parchment-container">
+        <div class="parchment-texture"></div>
+        
+        <!-- Header -->
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <a href="index.html" class="logo-container">
+                        <div class="knights-title">Knights of Pythias</div>
+                    </a>
+                    <nav>
+                        <ul>
+                            <li><a href="index.html#home">Home</a></li>
+                            <li><a href="index.html#about">About</a></li>
+                            <li><a href="index.html#gallery">Gallery</a></li>
+                            <li><a href="index.html#events">Events</a></li>
+                            <li><a href="index.html#contact">Contact</a></li>
+                        </ul>
+                    </nav>
+                    <div class="auth-buttons">
+                        <!-- This will be dynamically updated by JS -->
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Member Dashboard Section -->
+        <section>
+            <div class="container">
+                <h2 class="section-title">Member Dashboard</h2>
+                
+                <div class="dashboard-grid">
+                    <!-- Sidebar -->
+                    <div class="sidebar">
+                        <h3 style="margin-bottom: 20px;">Navigation</h3>
+                        <ul class="sidebar-menu">
+                            <li><a href="#" class="active" data-tab="dashboard">Dashboard</a></li>
+                            <li><a href="#" data-tab="calendar">Lodge Calendar</a></li>
+                            <li><a href="#" data-tab="documents">Documents</a></li>
+                            <li><a href="#" data-tab="profile">Profile Settings</a></li>
+                            <li><a href="#" id="logout-sidebar">Logout</a></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Main Content -->
+                    <div class="dashboard-content">
+                        <!-- Dashboard Tab -->
+                        <div id="dashboard" class="tab-content active">
+                            <div class="dashboard-section">
+                                <h3>Welcome, <span id="member-name">Brother</span>!</h3>
+                                <p>Welcome to your Knights of Pythias member dashboard. Here you can access lodge information, view the calendar, and manage your profile.</p>
+                            </div>
+                            
+                            <div class="dashboard-section">
+                                <h3>Lodge Announcements</h3>
+                                <div class="lodge-announcement">
+                                    <h4>Upcoming Officer Elections</h4>
+                                    <p>The annual officer elections will be held at our next regular meeting on October 15th. All members in good standing are encouraged to attend and participate.</p>
+                                    <p><strong>Date:</strong> October 15, 2025 at 7:00 PM</p>
+                                </div>
+                                <div class="lodge-announcement">
+                                    <h4>Charity Fundraiser Success</h4>
+                                    <p>Thank you to all members who participated in our recent charity fundraiser. We raised over $5,000 for the local children's hospital!</p>
+                                </div>
+                            </div>
+                            
+                            <div class="dashboard-section">
+                                <h3>Upcoming Events</h3>
+                                <div id="upcoming-events">
+                                    <div class="event-item">
+                                        <div class="event-date">September 20, 2025 - 7:00 PM</div>
+                                        <div class="event-title">Monthly Lodge Meeting</div>
+                                        <div class="event-description">Regular meeting for all members. Special presentation on lodge history.</div>
+                                    </div>
+                                    <div class="event-item">
+                                        <div class="event-date">October 5, 2025 - 10:00 AM</div>
+                                        <div class="event-title">Community Cleanup Day</div>
+                                        <div class="event-description">Join us as we help clean up local parks and streets.</div>
+                                    </div>
+                                    <div class="event-item">
+                                        <div class="event-date">October 15, 2025 - 6:30 PM</div>
+                                        <div class="event-title">Officer Elections</div>
+                                        <div class="event-description">Annual election of lodge officers. All members in good standing may vote.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="dashboard-section">
+                                <h3>Member Resources</h3>
+                                <div class="resources-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
+                                    <div class="resource-item" style="background-color: rgba(255, 255, 255, 0.5); padding: 20px; border-radius: 6px; text-align: center; border: 1px solid var(--parchment-shadow);">
+                                        <h4>Member Directory</h4>
+                                        <p>Connect with other members</p>
+                                        <a href="#" class="form-button" style="margin-top: 10px; display: inline-block; padding: 8px 15px;">View</a>
+                                    </div>
+                                    <div class="resource-item" style="background-color: rgba(255, 255, 255, 0.5); padding: 20px; border-radius: 6px; text-align: center; border: 1px solid var(--parchment-shadow);">
+                                        <h4>Lodge Bylaws</h4>
+                                        <p>Access official documents</p>
+                                        <a href="#" class="form-button" style="margin-top: 10px; display: inline-block; padding: 8px 15px;">Read</a>
+                                    </div>
+                                    <div class="resource-item" style="background-color: rgba(255, 255, 255, 0.5); padding: 20px; border-radius: 6px; text-align: center; border: 1px solid var(--parchment-shadow);">
+                                        <h4>Discussion Forums</h4>
+                                        <p>Join the conversation</p>
+                                        <a href="#" class="form-button" style="margin-top: 10px; display: inline-block; padding: 8px 15px;">Participate</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Calendar Tab -->
+                        <div id="calendar" class="tab-content">
+                            <div class="tab-navigation">
+                                <button class="tab-button active" data-calendar-tab="lodge">Lodge Calendar</button>
+                                <button class="tab-button" data-calendar-tab="community">Community Events</button>
+                            </div>
+                            
+                            <div id="lodge-calendar" class="calendar-tab active">
+                                <div class="calendar-wrapper">
+                                    <div id="calendar-content">
+                                        <!-- Calendar will be loaded here -->
+                                        <p>Loading your lodge calendar...</p>
+                                    </div>
+                                    <div class="calendar-controls" style="margin-top: 20px;">
+                                        <button id="authorize-button" class="form-button">Connect Google Calendar</button>
+                                        <button id="signout-button" class="form-button" style="display: none;">Disconnect</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="community-calendar" class="calendar-tab" style="display: none;">
+                                <div class="calendar-wrapper">
+                                    <p>Community calendar events will be displayed here.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Documents Tab -->
+                        <div id="documents" class="tab-content">
+                            <div class="dashboard-section">
+                                <h3>Lodge Documents</h3>
+                                <div class="document-list">
+                                    <div class="document-item">
+                                        <div class="document-icon">📄</div>
+                                        <div class="document-info">
+                                            <div class="document-title">Lodge Bylaws</div>
+                                            <div class="document-date">Last updated: August 15, 2025</div>
+                                        </div>
+                                        <div class="document-actions">
+                                            <a href="#" class="document-btn view">View</a>
+                                            <a href="#" class="document-btn download">Download</a>
+                                        </div>
+                                    </div>
+                                    <div class="document-item">
+                                        <div class="document-icon">📄</div>
+                                        <div class="document-info">
+                                            <div class="document-title">Meeting Minutes - August 2025</div>
+                                            <div class="document-date">Posted: September 1, 2025</div>
+                                        </div>
+                                        <div class="document-actions">
+                                            <a href="#" class="document-btn view">View</a>
+                                            <a href="#" class="document-btn download">Download</a>
+                                        </div>
+                                    </div>
+                                    <div class="document-item">
+                                        <div class="document-icon">📄</div>
+                                        <div class="document-info">
+                                            <div class="document-title">Annual Financial Report</div>
+                                            <div class="document-date">Posted: July 10, 2025</div>
+                                        </div>
+                                        <div class="document-actions">
+                                            <a href="#" class="document-btn view">View</a>
+                                            <a href="#" class="document-btn download">Download</a>
+                                        </div>
+                                    </div>
+                                    <div class="document-item">
+                                        <div class="document-icon">📄</div>
+                                        <div class="document-info">
+                                            <div class="document-title">Member Handbook</div>
+                                            <div class="document-date">Last updated: June 5, 2025</div>
+                                        </div>
+                                        <div class="document-actions">
+                                            <a href="#" class="document-btn view">View</a>
+                                            <a href="#" class="document-btn download">Download</a>
+                                        </div>
+                                    </div>
+                                    <div class="document-item">
+                                        <div class="document-icon">📄</div>
+                                        <div class="document-info">
+                                            <div class="document-title">Charitable Activities Report</div>
+                                            <div class="document-date">Posted: August 22, 2025</div>
+                                        </div>
+                                        <div class="document-actions">
+                                            <a href="#" class="document-btn view">View</a>
+                                            <a href="#" class="document-btn download">Download</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="dashboard-section">
+                                <h3>Forms & Resources</h3>
+                                <div class="document-list">
+                                    <div class="document-item">
+                                        <div class="document-icon">📄</div>
+                                        <div class="document-info">
+                                            <div class="document-title">Expense Reimbursement Form</div>
+                                            <div class="document-date">Last updated: May 12, 2025</div>
+                                        </div>
+                                        <div class="document-actions">
+                                            <a href="#" class="document-btn view">View</a>
+                                            <a href="#" class="document-btn download">Download</a>
+                                        </div>
+                                    </div>
+                                    <div class="document-item">
+                                        <div class="document-icon">📄</div>
+                                        <div class="document-info">
+                                            <div class="document-title">Event Proposal Template</div>
+                                            <div class="document-date">Last updated: April 3, 2025</div>
+                                        </div>
+                                        <div class="document-actions">
+                                            <a href="#" class="document-btn view">View</a>
+                                            <a href="#" class="document-btn download">Download</a>
+                                        </div>
+                                    </div>
+                                    <div class="document-item">
+                                        <div class="document-icon">📄</div>
+                                        <div class="document-info">
+                                            <div class="document-title">Lodge History Document</div>
+                                            <div class="document-date">Last updated: January 15, 2025</div>
+                                        </div>
+                                        <div class="document-actions">
+                                            <a href="#" class="document-btn view">View</a>
+                                            <a href="#" class="document-btn download">Download</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Profile Tab -->
+                        <div id="profile" class="tab-content">
+                            <div class="dashboard-section">
+                                <h3>Profile Information</h3>
+                                <div class="profile-info">
+                                    <div class="profile-field">
+                                        <label>Name</label>
+                                        <input type="text" id="profile-name" class="form-control">
+                                    </div>
+                                    <div class="profile-field">
+                                        <label>Email</label>
+                                        <input type="email" id="profile-email" class="form-control" readonly>
+                                    </div>
+                                    <div class="profile-field">
+                                        <label>Member Since</label>
+                                        <input type="text" id="profile-member-since" class="form-control" readonly>
+                                    </div>
+                                    <div class="profile-field">
+                                        <label>Notification Preferences</label>
+                                        <select id="profile-notifications" class="form-control">
+                                            <option value="all">All Notifications</option>
+                                            <option value="important">Important Only</option>
+                                            <option value="none">None</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button id="save-profile" class="form-button" style="margin-top: 20px;">Save Changes</button>
+                            </div>
+                            
+                            <div class="dashboard-section">
+                                <h3>Change Password</h3>
+                                <div class="profile-info" style="grid-template-columns: 1fr;">
+                                    <div class="profile-field">
+                                        <label>Current Password</label>
+                                        <input type="password" id="current-password" class="form-control">
+                                    </div>
+                                    <div class="profile-field">
+                                        <label>New Password</label>
+                                        <input type="password" id="new-password" class="form-control">
+                                    </div>
+                                    <div class="profile-field">
+                                        <label>Confirm New Password</label>
+                                        <input type="password" id="confirm-new-password" class="form-control">
+                                    </div>
+                                </div>
+                                <button id="change-password" class="form-button" style="margin-top: 20px;">Update Password</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-column">
+                        <h3>About</h3>
+                        <ul>
+                            <li><a href="index.html#about">Our Lodge</a></li>
+                            <li><a href="index.html#about">History</a></li>
+                            <li><a href="index.html#about">Leadership</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Resources</h3>
+                        <ul>
+                            <li><a href="index.html#gallery">Gallery</a></li>
+                            <li><a href="index.html#events">Events</a></li>
+                            <li><a href="#">Newsletter</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Membership</h3>
+                        <ul>
+                            <li><a href="index.html#contact">Inquire</a></li>
+                            <li><a href="login.html">Member Login</a></li>
+                            <li><a href="#">Benefits</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Connect</h3>
+                        <ul>
+                            <li><a href="index.html#contact">Contact</a></li>
+                            <li><a href="#">Facebook</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">Instagram</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="copyright">
+                    <p>&copy; 2025 Knights of Pythias. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script src="js/calendar.js"></script>
+    <!-- Google Calendar API -->
+    <script async defer src="https://apis.google.com/js/api.js" onload="initGoogleCalendar()"></script>
+    
+    <script>
+        // Dashboard specific JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            if (!window.authSystem.isLoggedIn) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Set member name
+            document.getElementById('member-name').textContent = window.authSystem.currentUser.name;
+            
+            // Set profile information
+            document.getElementById('profile-name').value = window.authSystem.currentUser.name;
+            document.getElementById('profile-email').value = window.authSystem.currentUser.email;
+            document.getElementById('profile-member-since').value = new Date(window.authSystem.currentUser.memberSince).toLocaleDateString();
+            
+            // Tab navigation
+            document.querySelectorAll('.sidebar-menu a[data-tab]').forEach(tab => {
+                tab.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all tabs
+                    document.querySelectorAll('.sidebar-menu a').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    document.getElementById(this.dataset.tab).classList.add('active');
+                });
+            });
+            
+            // Calendar tab navigation
+            document.querySelectorAll('.tab-button[data-calendar-tab]').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs
+                    document.querySelectorAll('.tab-button').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.calendar-tab').forEach(c => c.style.display = 'none');
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    if (this.dataset.calendarTab === 'lodge') {
+                        document.getElementById('lodge-calendar').style.display = 'block';
+                    } else {
+                        document.getElementById('community-calendar').style.display = 'block';
+                    }
+                });
+            });
+            
+            // Logout functionality
+            document.getElementById('logout-sidebar').addEventListener('click', function(e) {
+                e.preventDefault();
+                window.authSystem.logout();
+            });
+            
+            // Save profile changes
+            document.getElementById('save-profile').addEventListener('click', function() {
+                const name = document.getElementById('profile-name').value;
+                const notifications = document.getElementById('profile-notifications').value;
+                
+                // Update user data
+                window.authSystem.currentUser.name = name;
+                window.authSystem.currentUser.notifications = notifications;
+                
+                // Save to localStorage
+                localStorage.setItem('userData', JSON.stringify(window.authSystem.currentUser));
+                
+                // Show success message
+                alert('Profile updated successfully!');
+            });
+            
+            // Change password functionality
+            document.getElementById('change-password').addEventListener('click', function() {
+                const currentPassword = document.getElementById('current-password').value;
+                const newPassword = document.getElementById('new-password').value;
+                const confirmNewPassword = document.getElementById('confirm-new-password').value;
+                
+                // Simple validation
+                if (!currentPassword || !newPassword || !confirmNewPassword) {
+                    alert('Please fill in all password fields.');
+                    return;
+                }
+                
+                if (newPassword !== confirmNewPassword) {
+                    alert('New passwords do not match.');
+                    return;
+                }
+                
+                // In a real application, this would make an API call to change the password
+                // For demo purposes, we'll just show a success message
+                alert('Password changed successfully!');
+                
+                // Clear password fields
+                document.getElementById('current-password').value = '';
+                document.getElementById('new-password').value = '';
+                document.getElementById('confirm-new-password').value = '';
+            });
+        });
+    </script>
+</body>
+</html>
